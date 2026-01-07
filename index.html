@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Cutest Sister खUSHI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="hearts-container" id="heartContainer"></div>
+
+    <div id="page1" class="container">
+        <h1>Hey खUSHI! 👋</h1>
+        <p>Your brother <strong>Somu</strong> has a confession. Please listen with a calm heart...</p>
+        <button class="btn btn-yes" onclick="nextPage(2)">Click to listen</button>
+    </div>
+
+    <div id="page2" class="container hidden">
+        <h1>I'm SO SORRY! 😔</h1>
+        <p>I know mujhe jhoot nahi bolna chahiye tha. Please maaf karde, abse nahi karunga aise pranks!</p>
+        <p><strong>I promise:</strong> Teri Kasam maine Cigarette nahi pee. 🙃</p>
+        <h2>Maaf kiya? 🥺</h2>
+        
+        <div class="btn-group">
+            <button class="btn btn-yes" onclick="nextPage(3)">Haan, Maaf kiya ❤️</button>
+            <button class="btn btn-no" id="noBtn">Nahi! 😤</button>
+        </div>
+    </div>
+
+    <div id="page3" class="container hidden">
+        <h1>YAYYY! 🎉</h1>
+        <p>I knew you were the best! I promise no more bad pranks. 👫❤️</p>
+    </div>
+
+    <script>
+        function nextPage(pageNumber) {
+            document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+            document.getElementById('page' + pageNumber).classList.remove('hidden');
+        }
+
+        const noBtn = document.getElementById('noBtn');
+
+        function moveButton(e) {
+            // Stops the "click" or "scroll" from happening on mobile
+            if (e.type === 'touchstart') e.preventDefault();
+
+            // Calculate safe boundaries
+            const padding = 20;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            
+            // Random position within screen limits
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // Works on Laptop (mouseover) and Smartphone (touchstart)
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', moveButton);
+
+        // Floating Hearts Logic
+        function createHeart() {
+            const container = document.getElementById('heartContainer');
+            const heart = document.createElement('div');
+            const emojis = ['💝', '💖', '💗', '✨'];
+            heart.classList.add('heart');
+            heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            container.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 400);
+    </script>
+</body>
+</html>
